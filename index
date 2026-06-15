@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elijah Lange-MacKinnon | Academic Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --dark:       #1A1B28;
+      --gold:       #F5A623;
+      --gold-dim:   #D9911A;
+      --gold-light: #FFF8EC;
+      --gold-soft:  #FAD793;
+      --white:      #FFFFFF;
+      --bg:         #F2F2F7;
+      --text:       #1A1B28;
+      --muted:      #6B7280;
+      --border:     #E4E4EB;
+      --sidebar:    258px;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar);
+      background: var(--dark);
+      position: fixed; top: 0; left: 0; height: 100vh;
+      display: flex; flex-direction: column;
+      padding: 1.75rem 1.4rem 1.4rem;
+      z-index: 200;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 0.65rem;
+      margin-bottom: 2.25rem;
+    }
+    .brand-avatar {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), #e08a00);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem; color: var(--dark); font-weight: 700; flex-shrink: 0;
+    }
+    .brand-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.88rem; color: var(--white); display: block; line-height: 1.3;
+    }
+    .brand-sub {
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: rgba(255,255,255,0.32);
+    }
+    .nav-section { margin-bottom: 1.5rem; }
+    .nav-label {
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.28);
+      padding-left: 0.75rem; margin-bottom: 0.45rem; display: block;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      width: 100%; padding: 0.5rem 0.75rem; border-radius: 8px;
+      font-size: 0.84rem; font-weight: 400; color: rgba(255,255,255,0.56);
+      background: none; border: none; cursor: pointer;
+      text-align: left; transition: all 0.13s; margin-bottom: 0.1rem;
+    }
+    .nav-item:hover { background: rgba(245,166,35,0.1); color: var(--gold); }
+    .nav-item.active { background: rgba(245,166,35,0.18); color: var(--gold); font-weight: 600; }
+    .nav-icon { font-size: 0.9rem; flex-shrink: 0; }
+    .sidebar-footer {
+      margin-top: auto; text-align: center;
+      font-size: 0.65rem; color: rgba(255,255,255,0.18);
+      border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem;
+    }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar); flex: 1; padding: 2.25rem 2.5rem; }
+    #app { animation: fadeUp 0.2s ease both; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(130deg, var(--dark) 0%, #2A2B55 100%);
+      border-radius: 18px; padding: 2.4rem 2.5rem;
+      margin-bottom: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; right: -40px; top: -40px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem; color: var(--white); line-height: 1.15; margin-bottom: 0.5rem;
+    }
+    .hero-name span { color: var(--gold); }
+    .hero-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); max-width: 420px; line-height: 1.6; }
+    .hero-chips { display: flex; gap: 0.6rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .hero-chip {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.6); font-size: 0.75rem;
+      padding: 0.3rem 0.8rem; border-radius: 99px;
+    }
+    .hero-chip.gold { background: rgba(245,166,35,0.15); border-color: rgba(245,166,35,0.35); color: var(--gold); }
+
+    /* ── SECTION HEADING ── */
+    .section-heading { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.1rem; }
+    .section-heading h2 { font-size: 1rem; font-weight: 600; color: var(--text); white-space: nowrap; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── COURSE CARDS (Home) ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .course-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.35rem 1.25rem 1.2rem;
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .course-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: var(--c-accent);
+    }
+    .course-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); transform: translateY(-3px); }
+    .cc-icon-wrap {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--c-bg); display: flex; align-items: center;
+      justify-content: center; font-size: 1.25rem; margin-bottom: 0.9rem; flex-shrink: 0;
+    }
+    .cc-name { font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.2rem; line-height: 1.3; }
+    .cc-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.9rem; }
+    .cc-course-link {
+      margin-top: auto; font-size: 0.75rem; font-weight: 500;
+      color: var(--c-accent); text-decoration: none;
+    }
+    .cc-course-link:hover { text-decoration: underline; }
+    .cc-course-link.muted { color: var(--muted); cursor: default; }
+
+    /* ── COURSE VIEW ── */
+    .course-header {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      border-top: 4px solid var(--c-accent);
+    }
+    .back-btn {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.45rem 0.9rem;
+      font-family: 'Inter', sans-serif; font-size: 0.82rem;
+      color: var(--muted); cursor: pointer; flex-shrink: 0;
+      transition: all 0.13s; font-weight: 500;
+    }
+    .back-btn:hover { background: var(--border); color: var(--text); }
+    .course-header-inner { display: flex; align-items: center; gap: 0.85rem; flex: 1; }
+    .course-header-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--c-bg); display: flex; align-items: center;
+      justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .course-header-name {
+      font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text);
+    }
+    .course-header-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── ASSIGNMENT CARDS ── */
+    .assignment-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .assignment-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.1rem 1.4rem;
+      display: flex; align-items: center; gap: 1.1rem;
+    }
+    .assignment-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--c-bg); color: var(--c-accent);
+      font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .assignment-info { flex: 1; }
+    .assignment-name { font-weight: 600; font-size: 0.93rem; color: var(--text); }
+    .assignment-status { font-size: 0.75rem; margin-top: 0.18rem; }
+    .doc-linked { color: #16A34A; font-weight: 500; }
+    .doc-linked::before { content: '✓  '; }
+    .doc-missing { color: var(--muted); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.52rem 1.1rem; border-radius: 9px;
+      font-family: 'Inter', sans-serif; font-size: 0.83rem; font-weight: 500;
+      cursor: pointer; border: none; text-decoration: none;
+      white-space: nowrap; transition: all 0.14s;
+    }
+    .btn-primary { background: var(--gold); color: var(--dark); }
+    .btn-primary:hover { background: var(--gold-dim); box-shadow: 0 2px 10px rgba(245,166,35,0.4); }
+    .btn-ghost { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--border); color: var(--text); }
+    .btn-disabled {
+      display: inline-flex; align-items: center;
+      padding: 0.52rem 1.1rem; border-radius: 9px;
+      font-family: 'Inter', sans-serif; font-size: 0.83rem; font-weight: 500;
+      background: var(--bg); color: #C0C0CC; border: 1px solid var(--border);
+      white-space: nowrap; cursor: not-allowed;
+    }
+
+    /* ── PAGE HEADER (tips/about) ── */
+    .page-header { margin-bottom: 2rem; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--text); margin-bottom: 0.3rem; }
+    .page-header p { color: var(--muted); font-size: 0.9rem; }
+    .gold-rule { width: 40px; height: 4px; background: var(--gold); border-radius: 2px; margin-bottom: 0.8rem; }
+
+    /* ── TIPS ── */
+    .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .tip-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem; }
+    .tip-card-icon { font-size: 1.35rem; margin-bottom: 0.55rem; }
+    .tip-card-title { font-weight: 600; font-size: 0.93rem; margin-bottom: 0.45rem; }
+    .tip-card-body { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── ABOUT ── */
+    .about-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.25rem; max-width: 520px;
+    }
+    .about-avatar {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--dark) 0%, #2A2B55 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif; font-size: 1.3rem;
+      color: var(--gold); margin-bottom: 1.1rem;
+    }
+    .about-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 0.2rem; }
+    .about-sub  { color: var(--muted); font-size: 0.86rem; margin-bottom: 1.5rem; }
+    .about-row  { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .about-chip {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.45rem 0.9rem;
+      font-size: 0.82rem; color: var(--text);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 700px) {
+      :root { --sidebar: 0px; }
+      .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; padding: 0.75rem 1rem; gap: 0.3rem; }
+      .brand, .nav-section, .sidebar-footer { display: none; }
+      .main { margin-left: 0; padding: 1rem; }
+      .hero { padding: 1.5rem; }
+      .hero-name { font-size: 1.6rem; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .course-header { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ──────────────── SIDEBAR ──────────────── -->
+<nav class="sidebar">
+  <div class="brand">
+    <div class="brand-avatar">EL</div>
+    <div>
+      <span class="brand-name">Elijah Lange-MacKinnon</span>
+      <span class="brand-sub">Academic Portfolio</span>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-label">Main</span>
+    <button class="nav-item active" id="nav-home"  onclick="goHome()">   <span class="nav-icon">🏠</span> Home</button>
+    <button class="nav-item"        id="nav-tips"  onclick="goTips()">   <span class="nav-icon">💡</span> Metacognition Tips</button>
+    <button class="nav-item"        id="nav-about" onclick="goAbout()">  <span class="nav-icon">👤</span> About</button>
+  </div>
+
+  <div class="sidebar-footer">2025–2026 Academic Year</div>
+</nav>
+
+<!-- ──────────────── APP ──────────────── -->
+<main class="main">
+  <div id="app"></div>
+</main>
+
+
+<script>
+/* =====================================================================
+
+   ✏️  YOUR LINKS — EDIT THIS SECTION
+   ─────────────────────────────────────────────────────────────────────
+   Paste your Google Doc URLs below inside the quotes "".
+   Leave as "" if you don't have a link yet.
+
+   HOW TO ADD A NEW ASSIGNMENT:
+     Copy one of the { name: "...", doc: "" } lines,
+     paste it below the last one in that course (add a comma),
+     fill in the name and your Google Doc link.
+
+   HOW TO ADD YOUR COURSE PAGE LINK:
+     Paste the URL in the courseLink: "" field for that course.
+
+   Save the file and refresh your browser to see changes.
+
+===================================================================== */
+
+const COURSES = [
+
+  {
+    id: "debate",
+    name: "Debate",
+    icon: "🎤",
+    color:   "#7C3AED",
+    colorBg: "#F5F0FF",
+    courseLink: "",   // ← Paste your Debate course link here
+    assignments: [
+      { name: "Assignment 1", doc: "" },  // ← Paste Google Doc link
+      { name: "Assignment 2", doc: "" },
+      { name: "Assignment 3", doc: "" },
+    ]
+  },
+
+  {
+    id: "cspan",
+    name: "C-SPAN",
+    icon: "📺",
+    color:   "#1D4ED8",
+    colorBg: "#EFF4FF",
+    courseLink: "",   // ← Paste your C-SPAN course link here
+    assignments: [
+      { name: "Assignment 1", doc: "" },
+      { name: "Assignment 2", doc: "" },
+      { name: "Assignment 3", doc: "" },
+    ]
+  },
+
+  {
+    id: "court",
+    name: "Court",
+    icon: "⚖️",
+    color:   "#C2410C",
+    colorBg: "#FFF4EE",
+    courseLink: "",   // ← Paste your Court course link here
+    assignments: [
+      { name: "Assignment 1", doc: "" },
+      { name: "Assignment 2", doc: "" },
+      { name: "Assignment 3", doc: "" },
+    ]
+  },
+
+  {
+    id: "ct",
+    name: "Critical Thinking Paper",
+    icon: "📝",
+    color:   "#0F766E",
+    colorBg: "#EDFAF8",
+    courseLink: "",   // ← Paste your Critical Thinking Paper course link here
+    assignments: [
+      { name: "Assignment 1", doc: "" },
+      { name: "Assignment 2", doc: "" },
+      { name: "Assignment 3", doc: "" },
+    ]
+  }
+
+];
+
+/* =====================================================================
+   🚫  DO NOT EDIT BELOW THIS LINE
+===================================================================== */
+
+let view = 'home';
+let activeCourseId = null;
+
+function setNav(active) {
+  ['nav-home','nav-tips','nav-about'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === active);
+  });
+}
+
+function render(html) {
+  const app = document.getElementById('app');
+  app.innerHTML = html;
+  app.style.animation = 'none';
+  requestAnimationFrame(() => { app.style.animation = 'fadeUp 0.2s ease both'; });
+}
+
+/* ── HOME ── */
+function goHome() {
+  view = 'home'; activeCourseId = null;
+  setNav('nav-home');
+  render(`
+    <div class="hero">
+      <div class="hero-eyebrow">Academic Portfolio</div>
+      <div class="hero-name">Elijah <span>Lange-MacKinnon</span></div>
+      <div class="hero-desc">A record of coursework, reflections, and portfolio-worthy assignments for the 2025–2026 academic year.</div>
+      <div class="hero-chips">
+        <span class="hero-chip gold">🎓 2025–2026</span>
+        <span class="hero-chip">${COURSES.length} Courses</span>
+        <span class="hero-chip">Metacognitive Framework</span>
+      </div>
+    </div>
+
+    <div class="section-heading"><h2>My Courses</h2><div class="section-line"></div></div>
+
+    <div class="cards-grid">
+      ${COURSES.map(c => {
+        const linked = c.assignments.filter(a => a.doc).length;
+        const total  = c.assignments.length;
+        return `
+          <div class="course-card"
+               style="--c-accent:${c.color}; --c-bg:${c.colorBg}"
+               onclick="goCourse('${c.id}')">
+            <div class="cc-icon-wrap">${c.icon}</div>
+            <div class="cc-name">${c.name}</div>
+            <div class="cc-meta">${linked} of ${total} cover sheet${total !== 1 ? 's' : ''} linked</div>
+            ${c.courseLink
+              ? `<a class="cc-course-link" href="${c.courseLink}" target="_blank" onclick="event.stopPropagation()">Course page ↗</a>`
+              : `<span class="cc-course-link muted">No course link set</span>`}
+          </div>`;
+      }).join('')}
+    </div>
+  `);
+}
+
+/* ── COURSE VIEW ── */
+function goCourse(id) {
+  const c = COURSES.find(x => x.id === id);
+  if (!c) return;
+  view = 'course'; activeCourseId = id;
+  setNav('nav-home');
+  render(`
+    <div class="course-header" style="--c-accent:${c.color}; --c-bg:${c.colorBg}">
+      <button class="back-btn" onclick="goHome()">← All Courses</button>
+      <div class="course-header-inner">
+        <div class="course-header-icon">${c.icon}</div>
+        <div>
+          <div class="course-header-name">${c.name}</div>
+          <div class="course-header-sub">${c.assignments.length} assignment${c.assignments.length !== 1 ? 's' : ''}</div>
+        </div>
+      </div>
+      ${c.courseLink
+        ? `<a class="btn btn-ghost" href="${c.courseLink}" target="_blank">Course Page ↗</a>`
+        : ''}
+    </div>
+
+    <div class="section-heading">
+      <h2>Assignments</h2><div class="section-line"></div>
+    </div>
+
+    <div class="assignment-list">
+      ${c.assignments.map((a, i) => `
+        <div class="assignment-card" style="--c-accent:${c.color}; --c-bg:${c.colorBg}">
+          <div class="assignment-num">${i + 1}</div>
+          <div class="assignment-info">
+            <div class="assignment-name">${a.name}</div>
+            <div class="assignment-status">
+              ${a.doc
+                ? `<span class="doc-linked">Cover sheet linked</span>`
+                : `<span class="doc-missing">No link added yet</span>`}
+            </div>
+          </div>
+          ${a.doc
+            ? `<a class="btn btn-primary" href="${a.doc}" target="_blank">Open Cover Sheet ↗</a>`
+            : `<span class="btn-disabled">No Link Yet</span>`}
+        </div>
+      `).join('')}
+    </div>
+  `);
+}
+
+/* ── TIPS ── */
+function goTips() {
+  view = 'tips'; setNav('nav-tips');
+  render(`
+    <div class="page-header">
+      <div class="gold-rule"></div>
+      <h1>Metacognition Tips</h1>
+      <p>A quick reference for completing each step of your cover sheet.</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-card-icon">📌</div>
+        <div class="tip-card-title">Step 1 — Learning Objective</div>
+        <div class="tip-card-body">Look at your syllabus or rubric and translate it into your own words: <em>"By completing this, I will be able to…"</em> Be specific — avoid vague goals.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🧩</div>
+        <div class="tip-card-title">Step 2 — Skills &amp; Process</div>
+        <div class="tip-card-body">Break the assignment into actions. What specific skills did each step require? Refer to your program's skills list for vocabulary like "analysis" or "argumentation."</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🎯</div>
+        <div class="tip-card-title">Step 3 — Competency</div>
+        <div class="tip-card-body">Match this assignment to the competency it best demonstrates. Choose the most central skill the assignment tests — the one the rubric weighs most heavily.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🔍</div>
+        <div class="tip-card-title">Step 4 — Monitor Progress</div>
+        <div class="tip-card-body">Did your original plan work? Did you have to adapt? Good monitoring means noticing problems early and being honest about what needed fixing.</div>
+      </div>
+      <div class="tip-card" style="grid-column: 1 / -1">
+        <div class="tip-card-icon">✅</div>
+        <div class="tip-card-title">Step 5 — Self-Evaluation</div>
+        <div class="tip-card-body">Use your program's guiding questions. A strong evaluation is specific: <em>"I met the objective because… Evidence is… Next time I would…"</em> Avoid vague statements like "I did well."</div>
+      </div>
+    </div>
+  `);
+}
+
+/* ── ABOUT ── */
+function goAbout() {
+  view = 'about'; setNav('nav-about');
+  render(`
+    <div class="page-header">
+      <div class="gold-rule"></div>
+      <h1>About</h1>
+      <p>Portfolio owner information.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-avatar">EL</div>
+      <div class="about-name">Elijah Lange-MacKinnon</div>
+      <div class="about-sub">Academic Portfolio · 2025–2026</div>
+      <div class="about-row">
+        <span class="about-chip">📚 ${COURSES.length} Courses</span>
+        <span class="about-chip">📄 ${COURSES.reduce((s,c)=>s+c.assignments.filter(a=>a.doc).length,0)} Cover Sheets Linked</span>
+      </div>
+    </div>
+  `);
+}
+
+// Start on home
+goHome();
+</script>
+</body>
+</html>
